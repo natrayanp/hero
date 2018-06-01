@@ -1,0 +1,8 @@
+gunicorn
+Flask
+flask_cors
+psycopg2
+requests
+jwt
+python-dateutil
+zeep
