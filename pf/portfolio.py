@@ -15,6 +15,60 @@ import jwt
 import time
 
 
+@app.route("/tstnatlogin",methods=["GET","OPTIONS"])
+def tstnatlogin():
+    if request.method=="OPTIONS":
+        print("inside tstlogin options")
+        return "inside tstlogin options"
+
+    elif request.method=="GET":
+        #res_to_send, response = login_common(request, 'nc')
+        time.sleep(5)
+        res_to_send = 'success'
+        if res_to_send == 'success':
+            resps = make_response(jsonify({'nat': 'success'}), 200)    
+            #resps = make_response(jsonify(response), 200 if res_to_send == 'success' else 400)
+        else:
+            #resps = make_response(jsonify(response), 400)
+            print("end")
+    print("end")
+    return resps
+
+@bp_accallbk.route("/callback",methods=["GET","POST","OPTIONS"])
+def callback():
+    if request.method=="OPTIONS":
+            print("inside callback options")
+            response = "inside callback options"
+            #print(request.headers)
+            response1 = make_response(jsonify(response))            
+            return response1
+
+    elif request.method=="GET":
+        print("inside callback get")
+        params = request.args
+        print(params)
+        print(settings.MYNOTIPG[settings.LIVE])
+ 
+        response1 = make_response(redirect(settings.MYNOTIPG[settings.LIVE]+"?type="+typ+"&regdata="+regdata+"&msg="+msg, code=302))
+
+        response1.headers['Access-Control-Allow-Origin'] = "*"
+        response1.headers['Access-Control-Allow-Methods'] = "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+        response1.headers['Access-Control-Allow-Headers'] = "Origin, entityid, Content-Type, X-Auth-Token, countryid"
+        print(response1.headers)
+        return response1
+
+    elif request.method=="POST":
+        print("inside callback POST")
+        payload = request.get_json()
+        print("payload 11111111")
+        print(payload)
+       
+        print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+        response1 = make_response(redirect(settings.MYNOTIPG[settings.LIVE]+"?type="+typ+"&regdata="+regdata+"&msg="+msg, code=302))
+
+        return resps    
+
 
 @app.route('/pfdatafetch',methods=['GET','POST','OPTIONS'])
 def pfdatafetch():
