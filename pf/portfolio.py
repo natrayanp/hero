@@ -34,7 +34,7 @@ def tstnatlogin():
     print("end")
     return resps
 
-@bp_accallbk.route("/callback",methods=["GET","POST","OPTIONS"])
+@app.route("/callback",methods=["GET","POST","OPTIONS"])
 def callback():
     if request.method=="OPTIONS":
             print("inside callback options")
